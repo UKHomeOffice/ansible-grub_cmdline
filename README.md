@@ -69,4 +69,4 @@ MIT
 Author
 ------
 
-Jiri Tyr
+Mark Olliver

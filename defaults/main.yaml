@@ -1,7 +1,10 @@
 ---
 
 # Default list of additional Grub command line arguments
-grub_cmdline_add_args: []
+grub_cmdline_add_args:
+  - cgroup_enable=memory
+  - swapaccount=1
+
 # Example:
 #grub_cmdline_add_args:
 #  - biosdevname=0

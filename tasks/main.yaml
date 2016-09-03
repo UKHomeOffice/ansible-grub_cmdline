@@ -1,14 +1,16 @@
 ---
 
-- name: Test distribution
-  assert:
-    that: >
-      ansible_os_family == "RedHat"
-
 - name: Make sure Perl is installed
   yum:
     name: perl
     state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Make sure Perl is installed
+  apt:
+    name: perl
+    state: present
+  when: ansible_os_family == 'Ubuntu'
 
 - name: Get content of the Grub config file for RedHat <= 6
   shell: cat "{{ grub_cmdline_config_v1 }}" | perl -ane '/(?=.*{{ grub_cmdline_add_args | join(")(?=.*") }})/ && print "YES"'
@@ -45,3 +47,13 @@
     ansible_distribution_major_version | int >= 7
   notify:
     - Update Grub2 config file
+
+- name: Update Grub default config for Ubuntu >= 7
+  lineinfile:
+    dest: "{{ grub_cmdline_default }}"
+    line: GRUB_CMDLINE_LINUX="{{ grub_cmdline_add_args | join(' ') }}"
+    regexp: '^GRUB_CMDLINE_LINUX="'
+  when: >
+    ansible_os_family == "Ubuntu" and
+  notify:
+    - Update Grub2 config file ubuntu

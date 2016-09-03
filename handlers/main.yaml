@@ -1,4 +1,6 @@
 ---
-
-- name: Update Grub2 config file
+- name: Update Grub2 config file redhat
   shell: grub2-mkconfig -o {{ grub_cmdline_config_v2 }}
+
+- name: Update Grub2 config file ubuntu
+  shell: /usr/sbin/update-grub
