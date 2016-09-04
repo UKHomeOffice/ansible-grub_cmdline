@@ -4,6 +4,7 @@
 grub_cmdline_add_args:
   - cgroup_enable=memory
   - swapaccount=1
+  - audit=1
 
 # Example:
 #grub_cmdline_add_args:
