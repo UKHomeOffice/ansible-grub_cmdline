@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cat <<EOF
+set superusers="admin"
+password_pbkdf2 admin {{ grub_admin_password }}
+export superusers
+EOF

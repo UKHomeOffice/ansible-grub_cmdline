@@ -57,3 +57,36 @@
     ansible_os_family == "Ubuntu"
   notify:
     - Update Grub2 config file ubuntu
+
+- name: restrict Grub access to admin only Ubuntu
+  template:
+    src: 42_custom.j2
+    dest: /etc/grub.d/42_custom
+    owner: root
+    group: root
+    mode: 0750
+  when: >
+    ansible_os_family == "Ubuntu"
+  notify:
+    - Update Grub2 config file ubuntu
+
+- name: allow users to boot Ubuntu
+  lineinfile:
+    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
+    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
+    dest: /etc/grub.d/10_linux
+  when: >
+    ansible_os_family == "Ubuntu"
+  notify:
+    - Update Grub2 config file ubuntu
+
+- name: set default boot to Ubuntu
+  lineinfile:
+    regexp: ^GRUB_DEFAULT=0
+    line: GRUB_DEFAULT="Ubuntu"
+    dest: /etc/default/grub
+  when: >
+    ansible_os_family == "Ubuntu"
+  notify:
+    - Update Grub2 config file ubuntu
+
