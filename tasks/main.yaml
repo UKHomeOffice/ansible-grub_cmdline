@@ -48,13 +48,13 @@
   notify:
     - Update Grub2 config file
 
-- name: Update Grub default config for Ubuntu >= 7
+- name: Update Grub default config for Debian
   lineinfile:
     dest: "{{ grub_cmdline_default }}"
     line: GRUB_CMDLINE_LINUX="{{ grub_cmdline_add_args | join(' ') }}"
     regexp: '^GRUB_CMDLINE_LINUX="'
   when: >
-    ansible_os_family == "Ubuntu"
+    ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
 
@@ -66,7 +66,7 @@
     group: root
     mode: 0750
   when: >
-    ansible_os_family == "Ubuntu"
+    ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
 
@@ -76,7 +76,7 @@
     line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
     dest: /etc/grub.d/10_linux
   when: >
-    ansible_os_family == "Ubuntu"
+    ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
 
@@ -86,7 +86,7 @@
     line: GRUB_DEFAULT="Ubuntu"
     dest: /etc/default/grub
   when: >
-    ansible_os_family == "Ubuntu"
+    ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
 
