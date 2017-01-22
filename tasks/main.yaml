@@ -46,7 +46,31 @@
     ansible_os_family == "RedHat" and
     ansible_distribution_major_version | int >= 7
   notify:
-    - Update Grub2 config file
+    - Update Grub2 config file redhat
+
+- name: restrict Grub access to admin only redhat
+  template:
+    src: 42_custom.j2
+    dest: /etc/grub.d/42_custom
+    owner: root
+    group: root
+    mode: 0750
+  when: >
+    ansible_os_family == "RedHat" and
+    ansible_distribution_major_version | int >= 7
+  notify:
+    - Update Grub2 config file redhat
+
+- name: allow users to boot Redhat
+  lineinfile:
+    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
+    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
+    dest: /etc/grub.d/10_linux
+  when: >
+    ansible_os_family == "RedHat" and
+    ansible_distribution_major_version | int >= 7
+  notify:
+    - Update Grub2 config file redhat
 
 - name: Update Grub default config for Debian
   lineinfile:
