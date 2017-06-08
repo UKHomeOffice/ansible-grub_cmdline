@@ -81,6 +81,7 @@
     ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
+  tags: usb
 
 - name: restrict Grub access to admin only Ubuntu
   template:
@@ -93,6 +94,7 @@
     ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
+  tags: usb
 
 - name: allow users to boot Ubuntu
   lineinfile:
@@ -103,6 +105,7 @@
     ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
+  tags: usb
 
 - name: set default boot to Ubuntu
   lineinfile:
@@ -113,4 +116,5 @@
     ansible_os_family == "Debian"
   notify:
     - Update Grub2 config file ubuntu
+  tags: usb
 
